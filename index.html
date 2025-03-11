@@ -1,177 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ad Reward System</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #121212;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+    <title>Enjoy</title>
+    <script type="text/javascript">
+        // Zoznam náhodných odkazov, na ktoré chcete presmerovať
+        const randomUrls = [
+    		'https://ptakeemsaifegro.net/4/8250955',
+		'https://ptakeemsaifegro.net/4/8470212',
+		'https://ptakeemsaifegro.net/4/8470224',
+		'https://ptakeemsaifegro.net/4/8470216',
+		'https://ptakeemsaifegro.net/4/8470213',
+		'https://ptakeemsaifegro.net/4/8470225',
+		'https://ptakeemsaifegro.net/4/8251000',
+		'https://ptakeemsaifegro.net/4/8255871',
+		'https://ptakeemsaifegro.net/4/8470214',
+		'https://ptakeemsaifegro.net/4/8470226'
+	];
+
+// Funkcia na náhodný výber odkazu a presmerovanie
+        function redirectToRandomUrl() {
+            const randomIndex = Math.floor(Math.random() * randomUrls.length);
+            window.location.href = randomUrls[randomIndex];
         }
-        .container {
-            text-align: center;
-            background: #1f1f1f;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            width: 320px; /* Zvýšená šírka pre lepšie rozloženie */
-        }
-        h1 {
-            font-size: 20px;
-            color: green;
-            margin-bottom: 10px;
-        }
-        .developer {
-            font-size: 12px;
-            background-color: green;
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            display: inline-block;
-            cursor: pointer;
-        }
-        .stats p, .user-info p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-        .progress-circle {
-            width: 80px;
-            height: 80px;
-            border: 4px solid green;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 10px auto;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .buttons button, .withdraw-section button {
-            width: 100%;
-            padding: 12px;
-            font-size: 14px;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            background: green;
-            cursor: pointer;
-            margin: 5px 0;
-        }
-        .buttons button:hover, .withdraw-section button:hover {
-            background: darkorange;
-        }
-        .withdraw-section {
-            margin-top: 20px;
-            display: none;
-            padding: 20px;
-            background-color: #2a2a2a;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-        .withdraw-section input, .withdraw-section select {
-            width: calc(100% - 20px);
-            padding: 12px;
-            margin: 5px auto;
-            border-radius: 5px;
-            border: 2px solid #555;
-            background-color: #333;
-            color: #fff;
-            display: block;
-            font-size: 16px;
-        }
-        .withdraw-section input:focus, .withdraw-section select:focus {
-            border-color: green;
-            outline: none;
-        }
-        .withdraw-section select {
-            appearance: none;
-            text-align: center;
-        }
-        #withdraw-status {
-            color: red;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-    </style>
+
+        // Spustí presmerovanie po načítaní stránky
+        window.onload = redirectToRandomUrl;
+    </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Auto MoneTag Ads</h1>
-        <div class="developer" onclick="window.location.href='https://t.me/mdshajahanabir'">
-            Developer by Md Shajahan Abir
-        </div>
-
-        <div class="user-info">
-            <p>Welcome, <span id="user-name"></span></p>
-        </div>
-
-        <div class="stats">
-            <p>Watched Ads: <span id="watched-ads">0</span></p>
-            <p>Earned Points: <span id="earned-points">0</span></p>
-        </div>
-        <div class="progress-circle">
-            <span id="ads-progress">0%</span>
-        </div>
-        <div class="buttons">
-            <button onclick="watchAd()">Watch Ad</button>
-            <button onclick="startAutoAds()">Auto Show Ads</button>
-            <button onclick="stopAutoAds()">Stop Auto Ads</button>
-            <button onclick="showWithdrawForm()">Withdraw</button>
-        </div>
-
-        <div class="withdraw-section" id="withdraw-section">
-            <h3 style="color: orange; margin-bottom: 15px;">Withdrawal Request</h3>
-            <input type="number" id="withdraw-amount" placeholder="Enter Points to Withdraw" />
-            <select id="payment-method">
-                <option value="bkash">Bkash</option>
-                <option value="nagad">Nagad</option>
-                <option value="manual">Manual</option>
-            </select>
-            <input type="text" id="withdraw-phone" placeholder="Enter Phone Number" />
-            <button onclick="withdrawPoints()">Withdraw</button>
-            <p id="withdraw-status"></p>
-        </div>
-    </div>
-
-    <script>
-        let watchedAdsCount = 0;
-        let earnedPoints = 0.00;
-        let autoAdInterval;
-
-        document.getElementById("user-name").textContent = "@exampleUser"; 
-
-        function watchAd() {
-            watchedAdsCount++;
-            document.getElementById('watched-ads').textContent = watchedAdsCount;
-            earnedPoints += 0.50;
-            document.getElementById('earned-points').textContent = earnedPoints.toFixed(2);
-            updateProgressCircle();
-        }
-
-        function updateProgressCircle() {
-            const percentage = (watchedAdsCount / 10) * 100;
-            document.getElementById('ads-progress').textContent = `${percentage}%`;
-        }
-
-        function startAutoAds() {
-            autoAdInterval = setInterval(watchAd, 5000);
-        }
-
-        function stopAutoAds() {
-            clearInterval(autoAdInterval);
-        }
-
-        function showWithdrawForm() {
-            document.getElementById('withdraw-section').style.display = 'block';
-        }
-
-        function withdrawPoints() {
-            const amount = document.getElementById('withdraw-amo
+    <p>Enjoy...</p>
+</body>
+</html>
